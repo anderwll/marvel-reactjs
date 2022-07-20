@@ -1,11 +1,11 @@
-import { Typography } from '@mui/material';
-import React from 'react';
-import { PaperStyled } from './Styleds';
+import { Typography } from '@mui/material'
+import React from 'react'
+import { PaperStyled } from './Styleds'
 
 interface PaperDefaultProps {
-  title: string;
-  body: string;
-  elevation: number;
+  title: string
+  body: string
+  elevation: number
 }
 const PaperDefault: React.FC<PaperDefaultProps> = ({
   title,
@@ -19,7 +19,7 @@ const PaperDefault: React.FC<PaperDefaultProps> = ({
         {body}
       </Typography>
     </PaperStyled>
-  );
-};
+  )
+}
 
-export default PaperDefault;
+export default PaperDefault

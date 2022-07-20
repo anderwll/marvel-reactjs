@@ -1,18 +1,18 @@
-import React from 'react';
-import Accordion from '@mui/material/Accordion';
-import AccordionSummary from '@mui/material/AccordionSummary';
-import AccordionDetails from '@mui/material/AccordionDetails';
-import Typography from '@mui/material/Typography';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import React from 'react'
+import Accordion from '@mui/material/Accordion'
+import AccordionSummary from '@mui/material/AccordionSummary'
+import AccordionDetails from '@mui/material/AccordionDetails'
+import Typography from '@mui/material/Typography'
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 
 export interface ItemAccordionI {
-  id: number;
-  title: string;
-  text: string;
+  id: number
+  title: string
+  text: string
 }
 
 interface DynamicAccordionPros {
-  items: Array<ItemAccordionI>;
+  items: Array<ItemAccordionI>
 }
 const DynamicAccordion: React.FC<DynamicAccordionPros> = ({ items }) => {
   return (
@@ -31,10 +31,10 @@ const DynamicAccordion: React.FC<DynamicAccordionPros> = ({ items }) => {
               <Typography>{item.text}</Typography>
             </AccordionDetails>
           </Accordion>
-        );
+        )
       })}
     </>
-  );
-};
+  )
+}
 
-export default DynamicAccordion;
+export default DynamicAccordion
