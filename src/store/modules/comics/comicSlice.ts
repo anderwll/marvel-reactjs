@@ -20,7 +20,7 @@ const initialState: initialState = {
 }
 
 const comicSlice = createSlice({
-  name: 'comic',
+  name: 'Comic',
   initialState,
   reducers: {
     requestComic(state) {
@@ -44,4 +44,5 @@ const comicSlice = createSlice({
 
 export const { createComic, clearComic, requestComic, requestComicError } =
   comicSlice.actions
+
 export default comicSlice.reducer
