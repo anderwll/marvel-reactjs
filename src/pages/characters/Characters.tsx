@@ -48,7 +48,7 @@ const CharactersPage: React.FC = () => {
       {characterRedux && (
         <>
           {characterRedux.map((dado: any) => (
-            <Grid key={dado.id} item sm={3}>
+            <Grid key={dado.id} item sm={6} md={3}>
               <Card>
                 <CardActionArea>
                   <CardMedia
