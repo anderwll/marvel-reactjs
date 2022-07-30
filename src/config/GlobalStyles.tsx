@@ -1,14 +1,12 @@
-import React from 'react'
-import GlobalStyles from '@mui/material/GlobalStyles'
+import { createGlobalStyle } from 'styled-components'
 
-const StylesGlobal: React.FC = () => {
-  return (
-    <GlobalStyles
-      styles={{
-        a: { textDecoration: 'none', color: 'inherit' },
-      }}
-    />
-  )
-}
+const GlobalStyle = createGlobalStyle`
+  body {
+    margin: 0px;
+    padding: 0px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    background-color: aliceblue;
+  }
+`
 
-export default StylesGlobal
+export default GlobalStyle

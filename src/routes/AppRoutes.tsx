@@ -9,9 +9,15 @@ const AppRoutes: React.FC = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<LayoutDefault />} />
-        <Route path="/characters" element={<LayoutDefault />} />
-        <Route path="/comics" element={<LayoutDefault />} />
+        <Route path="/" element={<LayoutDefault component={HomePage} />} />
+        <Route
+          path="/characters"
+          element={<LayoutDefault component={CharactersPage} />}
+        />
+        <Route
+          path="/comics"
+          element={<LayoutDefault component={ComicsPage} />}
+        />
       </Routes>
     </BrowserRouter>
   )

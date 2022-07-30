@@ -1,48 +1,57 @@
 /* eslint-disable no-param-reassign */
-import { createSlice } from '@reduxjs/toolkit'
+import {
+  createAsyncThunk,
+  createEntityAdapter,
+  createSlice,
+} from '@reduxjs/toolkit'
+import { marvel } from '../../../services'
+import { RootState } from '../../index'
 
-export type Comics = {
-  id: string
-  name: string
-  imgPath: string
+export interface Comics {
+  id: number
+  name?: string
+  imgURL?: string
+  favorite?: any
 }
 
-type initialState = {
-  loading: boolean
-  comics: Comics[]
-  error: ''
-}
+const adapter = createEntityAdapter<Comics>({
+  selectId: (item) => item.id,
+})
 
-const initialState: initialState = {
-  loading: false,
-  comics: [],
-  error: '',
-}
+export const { selectAll, selectById } = adapter.getSelectors<RootState>(
+  (state) => state.comics
+)
+
+export const getAll = createAsyncThunk('getAllComics', async () => {
+  const response = await marvel.get('/comics')
+  return response.data.results
+})
 
 const comicSlice = createSlice({
-  name: 'Comic',
-  initialState,
+  name: 'comics',
+  initialState: adapter.getInitialState({ loading: false }),
   reducers: {
-    requestComic(state) {
-      state.loading = true
-    },
-    createComic(state, action) {
-      state.loading = false
-      state.comics = action.payload
-      state.error = ''
-    },
-    requestComicError(state, action) {
-      state.loading = false
-      state.comics = []
-      state.error = action.payload
-    },
-    clearComic() {
-      return initialState
-    },
+    addOne: adapter.addOne,
+    addMany: adapter.addMany,
+    updateOne: adapter.updateOne,
+    upsertOne: adapter.upsertOne,
+    setAll: adapter.setAll,
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(getAll.pending, (state) => {
+        state.loading = true
+      })
+      .addCase(getAll.fulfilled, (state, action) => {
+        state.loading = false
+        adapter.setAll(state, action.payload)
+      })
+      .addCase(getAll.rejected, () => {
+        console.log('deu ruim')
+      })
   },
 })
 
-export const { createComic, clearComic, requestComic, requestComicError } =
+export const { addOne, addMany, updateOne, setAll, upsertOne } =
   comicSlice.actions
-
 export default comicSlice.reducer

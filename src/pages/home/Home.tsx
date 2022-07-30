@@ -1,11 +1,20 @@
 import React from 'react'
+import { Grid, Typography } from '@mui/material'
 
 const HomePage: React.FC = () => {
   return (
-    <React.Fragment>
-      <h1>Growdev</h1>
-      <p>Ola</p>
-    </React.Fragment>
+    <Grid
+      container
+      spacing={2}
+      sx={{
+        backgroundImage: 'url(./images/home.jfif)',
+        height: 900,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+      }}
+    >
+      <Grid item xs={12} />
+    </Grid>
   )
 }
 

@@ -1,70 +1,70 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { Box, Grid, Typography } from '@mui/material'
-import { marvel } from '../../services'
 import {
-  Comics,
-  createComic,
-  requestComic,
-  requestComicError,
-} from '../../store/modules/comics/comicSlice'
+  Button,
+  CardActionArea,
+  CardActions,
+  Grid,
+  CardContent,
+  CardMedia,
+  Card,
+  Typography,
+} from '@mui/material'
+import FavoriteIcon from '@mui/icons-material/Favorite'
+import { getAll, selectAll } from '../../store/modules/comics/comicSlice'
+import { useAppDispatch, useAppSelector } from '../../store/modules/types-hooks'
 
 const ComicsPage: React.FC = () => {
-  const dispatch = useDispatch()
-
-  const comicRedux = useSelector((state: any) => state.comicSlice)
+  const dispatch = useAppDispatch()
+  const comicsRedux = useAppSelector(selectAll)
+  const comicsLoading = useAppSelector((state) => state.comics.loading)
+  // const ref = useRef(null)
 
   useEffect(() => {
-    dispatch(requestComic())
-    marvel
-      .get('/comics')
-      .then(({ data }) => {
-        const res = JSON.parse(data)
-        console.log(res)
-        const id = res.data.results.map((dado: any) => dado.id)
-        const title = res.data.results.map((dado: any) => dado.title)
-        const foto = res.data.results.map((dado: any) => dado.thumbnail.path)
-
-        const comics: Comics[] = []
-        id.forEach((element: any, index: any) => {
-          comics.push({
-            id: element,
-            name: title[index],
-            imgPath: foto[index],
-          })
-        })
-
-        dispatch(createComic(comics))
-      })
-      .catch((error) => {
-        dispatch(requestComicError(error.message))
-      })
+    dispatch(getAll())
   }, [])
 
   return (
-    <Grid container spacing={2}>
+    <Grid container spacing={2} sx={{ marginTop: '5rem' }}>
       <Grid item xs={12}>
         <Typography variant="h3" color="primary">
-          Personagens
+          Revistas
         </Typography>
-        {comicRedux.loading && <div>Loading...</div>}
-        {!comicRedux.loading && comicRedux.error ? (
-          <div>Erro: {comicRedux.error}</div>
-        ) : null}
-
-        {comicRedux.comics.length > 0 && (
-          <Box>
-            {comicRedux.comics.map((dado: any) => (
-              <div key={dado.id}>
-                <Typography variant="h3" color="primary">
-                  {dado.name}
-                </Typography>
-                <img src={`${dado.imgPath}.jpg`} alt="marvel-img" />
-              </div>
-            ))}
-          </Box>
-        )}
       </Grid>
+      {comicsLoading && (
+        <Grid item xs={12}>
+          Loading...
+        </Grid>
+      )}
+
+      {comicsRedux && (
+        <>
+          {comicsRedux.map((dado: any) => (
+            <Grid key={dado.id} item sm={6} md={3} xs={2}>
+              <Card>
+                <CardActionArea>
+                  <CardMedia
+                    component="img"
+                    height="200"
+                    image={`${dado.thumbnail.path}.jpg`}
+                    alt="imgPath"
+                  />
+                  <CardContent>
+                    <Typography gutterBottom variant="h5" component="div">
+                      {dado.title}
+                    </Typography>
+                  </CardContent>
+                </CardActionArea>
+                <CardActions>
+                  <Button size="small" color="primary">
+                    <FavoriteIcon />
+                  </Button>
+                </CardActions>
+              </Card>
+            </Grid>
+          ))}
+        </>
+      )}
     </Grid>
   )
 }

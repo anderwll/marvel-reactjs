@@ -4,14 +4,15 @@ import { ThemeProvider } from '@mui/material/styles'
 import ThemeDefault from './config/theme/Default'
 
 import AppRoutes from './routes/AppRoutes'
-import StylesGlobal from './config/GlobalStyles'
+
 import store from './store/index'
+import GlobalStyle from './config/GlobalStyles'
 
 const App: React.FC = () => {
   return (
     <Provider store={store}>
       <ThemeProvider theme={ThemeDefault}>
-        <StylesGlobal />
+        <GlobalStyle />
         <AppRoutes />
       </ThemeProvider>
     </Provider>

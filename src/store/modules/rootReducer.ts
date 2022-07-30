@@ -1,8 +1,8 @@
 import { combineReducers } from '@reduxjs/toolkit'
-import comicSlice from './comics/comicSlice'
-import charactersSlice from './characters/charactersSlice'
+import comics from './comics/comicSlice'
+import characters from './characters/charactersSlice'
 
 export const rootReducer = combineReducers({
-  comicSlice,
-  charactersSlice,
+  comics,
+  characters,
 })
